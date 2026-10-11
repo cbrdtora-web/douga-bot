@@ -23,16 +23,26 @@ def run(cmd):
 
 
 def make_subtitle_png(text, path):
-    """透明な背景に、縁取りつきの字幕を描く。"""
-    img = Image.new("RGBA", (W, 400), (0, 0, 0, 0))
+    """白い吹き出し(しっぽつき)にセリフを入れた透明PNGを作る。"""
+    img = Image.new("RGBA", (W, 520), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
-    size = 110
+    size = 100
     font = ImageFont.truetype(FONT, size)
-    while d.textlength(text, font=font) > W - 120 and size > 40:
+    while d.textlength(text, font=font) > W - 280 and size > 40:
         size -= 6
         font = ImageFont.truetype(FONT, size)
-    x = (W - d.textlength(text, font=font)) / 2
-    d.text((x, 130), text, font=font, fill="white", stroke_width=10, stroke_fill="black")
+    tw = d.textlength(text, font=font)
+    bw, bh = tw + 140, size + 120
+    x0, y0 = (W - bw) / 2, 40
+    x1, y1 = x0 + bw, y0 + bh
+    cx = W / 2 - 60  # しっぽの位置(猫の顔のほうへ)
+    d.polygon([(cx - 40, y1 - 10), (cx + 40, y1 - 10), (cx - 10, y1 + 110)],
+              fill="black")
+    d.rounded_rectangle((x0 - 8, y0 - 8, x1 + 8, y1 + 8), radius=70, fill="black")
+    d.polygon([(cx - 30, y1 - 14), (cx + 30, y1 - 14), (cx - 10, y1 + 90)], fill="white")
+    d.rounded_rectangle((x0, y0, x1, y1), radius=64, fill="white")
+    d.polygon([(cx - 30, y1 - 14), (cx + 30, y1 - 14), (cx - 10, y1 + 90)], fill="white")
+    d.text((W / 2, (y0 + y1) / 2), text, font=font, fill="black", anchor="mm")
     img.save(path)
 
 
@@ -102,7 +112,7 @@ def main():
         audio = "[2:a]volume=0.5[b];[3:a]adelay=1500|1500,volume=1.4[v];[b][v]amix=inputs=2:duration=first[a]"
     fc = (f"[0:v]{zp},format=yuv420p[v0];"
           f"[1:v]format=rgba,{fade}[s];"
-          f"[v0][s]overlay=0:{H - 650}:format=auto[v];{audio}")
+          f"[v0][s]overlay=0:60:format=auto[v];{audio}")
     cmd += ["-filter_complex", fc, "-map", "[v]", "-map", "[a]", "-t", str(a.seconds),
             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k", a.out]
     run(cmd)
