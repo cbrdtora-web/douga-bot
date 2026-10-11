@@ -22,7 +22,7 @@ def run(cmd):
     subprocess.run(cmd, check=True, capture_output=True)
 
 
-def make_subtitle_png(text, path):
+def make_subtitle_png(text, path, color="#FFE066"):
     """漫画ふうの吹き出し(太い縁・だ円・しっぽ)にセリフを入れた透明PNGを作る。"""
     K = 2  # 2倍の大きさで描いて縮小し、縁をなめらかにする
     img = Image.new("RGBA", (W * K, 560 * K), (0, 0, 0, 0))
@@ -44,8 +44,8 @@ def make_subtitle_png(text, path):
     # 黒い縁 → 白い中身の順に重ねる
     d.ellipse(box(14), fill="black")
     d.polygon(big(tail_edge), fill="black")
-    d.ellipse(box(0), fill="white")
-    d.polygon(big(tail), fill="white")
+    d.ellipse(box(0), fill=color)
+    d.polygon(big(tail), fill=color)
     # 文字はふち取りで太く見せる(漫画のセリフ風)
     d.text((W / 2 * K, (y0 + y1) / 2 * K), text, font=font, fill="black", anchor="mm",
            stroke_width=3 * K, stroke_fill="black")
@@ -75,10 +75,10 @@ def make_bgm(path, seconds):
         w.writeframes((out * 32767).astype(np.int16).tobytes())
 
 
-def make_voice(text, path):
+def make_voice(text, path, pitch=9.0, speed=1.12):
     """日本語の読み上げ音声を作る(インターネット不要・無料)。"""
     import pyopenjtalk
-    x, sr = pyopenjtalk.tts(text, half_tone=5.0)  # 少し高めの声にする
+    x, sr = pyopenjtalk.tts(text, speed=speed, half_tone=pitch)  # 高く・少し速くして子供っぽく
     x = x / np.abs(x).max() * 0.9
     with wave.open(str(path), "wb") as w:
         w.setnchannels(1)
@@ -91,6 +91,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--image", default="assets/cat.jpg")
     ap.add_argument("--text", default="ここ、落ち着くにゃ…")
+    ap.add_argument("--say", default="ここ、おちつくにゃーん", help="読み上げ用の文(ひらがな推奨)")
+    ap.add_argument("--color", default="#FFE066", help="吹き出しの色(例: #FFB3C7=ピンク, #BDE7FF=水色)")
+    ap.add_argument("--pitch", type=float, default=9.0, help="声の高さ(大きいほど高い)")
     ap.add_argument("--seconds", type=int, default=10)
     ap.add_argument("--face-x", type=float, default=0.49, help="猫の顔の位置(横, 0〜1)")
     ap.add_argument("--face-y", type=float, default=0.50, help="猫の顔の位置(縦, 0〜1)")
@@ -100,7 +103,7 @@ def main():
 
     OUT_DIR.mkdir(exist_ok=True)
     sub, bgm, voice = OUT_DIR / "sub.png", OUT_DIR / "bgm.wav", OUT_DIR / "voice.wav"
-    make_subtitle_png(a.text, sub)
+    make_subtitle_png(a.text, sub, a.color)
     make_bgm(bgm, a.seconds)
 
     # 画像を縦長(9:16)に切り出し、猫の顔を中心にゆっくりズーム
@@ -120,7 +123,7 @@ def main():
     cmd = ["ffmpeg", "-y", "-loop", "1", "-i", str(crop), "-loop", "1", "-i", str(sub), "-i", str(bgm)]
     audio = "[2:a]volume=0.8[a]"
     if not a.no_voice:
-        make_voice(a.text, voice)
+        make_voice(a.say, voice, a.pitch)
         cmd += ["-i", str(voice)]
         audio = "[2:a]volume=0.5[b];[3:a]adelay=1000|1000,volume=1.4[vo];[b][vo]amix=inputs=2:duration=first[a]"
     fc = (f"[0:v]{zp},format=yuv420p[v0];"
