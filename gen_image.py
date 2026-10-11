@@ -32,7 +32,7 @@ def main():
     torch.set_num_threads(4)
     pipe = DiffusionPipeline.from_pretrained(BASE, torch_dtype=torch.float32, safety_checker=None)
     pipe.scheduler = LCMScheduler.from_config(pipe.scheduler.config)
-    pipe.load_lora_weights(LCM)
+    pipe.load_lora_weights(LCM, weight_name="pytorch_lora_weights.safetensors")
     pipe.fuse_lora()
 
     t = time.time()
