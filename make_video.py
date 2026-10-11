@@ -75,11 +75,30 @@ def make_bgm(path, seconds):
         w.writeframes((out * 32767).astype(np.int16).tobytes())
 
 
+def make_meow(sr, seconds=0.75):
+    """猫の「ニャー」を合成する(音の高さと口の形を変化させて作る)。"""
+    t = np.arange(int(sr * seconds)) / sr
+    u = t / seconds
+    f0 = 520 + 330 * np.sin(np.pi * np.clip(u * 1.1, 0, 1)) - 120 * u  # 上がって下がる高さ
+    phase = 2 * np.pi * np.cumsum(f0) / sr
+    # 口の形: 「ニ(い)」→「ャ(あ)」→「ー(う)」へ変化
+    f1 = np.interp(u, [0, 0.25, 0.7, 1], [350, 950, 800, 450])
+    f2 = np.interp(u, [0, 0.25, 0.7, 1], [2300, 1600, 1400, 1000])
+    out = np.zeros_like(t)
+    for k in range(1, 25):
+        fk = f0 * k
+        amp = np.exp(-((fk - f1) / 220) ** 2) + 0.6 * np.exp(-((fk - f2) / 350) ** 2) + 0.05
+        out += amp * np.sin(k * phase) / k ** 0.5
+    out *= np.minimum(1, u / 0.08) * np.minimum(1, (1 - u) / 0.25)
+    return out / np.abs(out).max() * 0.9
+
+
 def make_voice(text, path, pitch=9.0, speed=1.12):
-    """日本語の読み上げ音声を作る(インターネット不要・無料)。"""
+    """読み上げ(オフライン・無料)に、合成した猫の鳴き声をつなげる。"""
     import pyopenjtalk
-    x, sr = pyopenjtalk.tts(text, speed=speed, half_tone=pitch)  # 高く・少し速くして子供っぽく
+    x, sr = pyopenjtalk.tts(text, speed=speed, half_tone=pitch)
     x = x / np.abs(x).max() * 0.9
+    x = np.concatenate([x, np.zeros(int(sr * 0.08)), make_meow(sr)])
     with wave.open(str(path), "wb") as w:
         w.setnchannels(1)
         w.setsampwidth(2)
@@ -91,7 +110,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--image", default="assets/cat.jpg")
     ap.add_argument("--text", default="ここ、落ち着くにゃ…")
-    ap.add_argument("--say", default="ここ、おちつくにゃーん", help="読み上げ用の文(ひらがな推奨)")
+    ap.add_argument("--say", default="ここ、おちつく", help="読み上げ用の文(最後に猫の鳴き声が付く)")
     ap.add_argument("--color", default="#FFE066", help="吹き出しの色(例: #FFB3C7=ピンク, #BDE7FF=水色)")
     ap.add_argument("--pitch", type=float, default=9.0, help="声の高さ(大きいほど高い)")
     ap.add_argument("--seconds", type=int, default=10)
