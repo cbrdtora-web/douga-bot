@@ -28,16 +28,22 @@ def main():
     ap.add_argument("--steps", type=int, default=6)
     ap.add_argument("--size", type=int, default=512)
     ap.add_argument("--height", type=int, default=0, help="縦の長さ(0なら正方形)")
+    ap.add_argument("--model", default=BASE, help="使うモデル(Hugging Face名)")
+    ap.add_argument("--negative", default="", help="出してほしくないもの(英語)")
+    ap.add_argument("--guidance", type=float, default=1.0, help="指示への従い度(出してほしくないものを使うなら1.5前後)")
     a = ap.parse_args()
 
     torch.set_num_threads(4)
-    pipe = DiffusionPipeline.from_pretrained(BASE, torch_dtype=torch.float32, safety_checker=None)
+    # .bin形式の古いモデルは、プログラムが実行されない安全モード(weights_only)で読み込まれる
+    pipe = DiffusionPipeline.from_pretrained(a.model, torch_dtype=torch.float32, safety_checker=None,
+                                             use_safetensors=a.model == BASE or "Realistic_Vision" in a.model)
     pipe.scheduler = LCMScheduler.from_config(pipe.scheduler.config)
     pipe.load_lora_weights(LCM, weight_name="pytorch_lora_weights.safetensors")
     pipe.fuse_lora()
 
     t = time.time()
-    img = pipe(a.prompt, num_inference_steps=a.steps, guidance_scale=1.0,
+    img = pipe(a.prompt, negative_prompt=a.negative or None,
+               num_inference_steps=a.steps, guidance_scale=a.guidance,
                width=a.size, height=a.height or a.size,
                generator=torch.Generator().manual_seed(a.seed)).images[0]
     Path(a.out).parent.mkdir(exist_ok=True)
