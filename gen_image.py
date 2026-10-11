@@ -27,6 +27,7 @@ def main():
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--steps", type=int, default=6)
     ap.add_argument("--size", type=int, default=512)
+    ap.add_argument("--height", type=int, default=0, help="縦の長さ(0なら正方形)")
     a = ap.parse_args()
 
     torch.set_num_threads(4)
@@ -37,7 +38,7 @@ def main():
 
     t = time.time()
     img = pipe(a.prompt, num_inference_steps=a.steps, guidance_scale=1.0,
-               width=a.size, height=a.size,
+               width=a.size, height=a.height or a.size,
                generator=torch.Generator().manual_seed(a.seed)).images[0]
     Path(a.out).parent.mkdir(exist_ok=True)
     img.save(a.out)
