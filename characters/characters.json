@@ -1,9 +1,11 @@
 {
   "version": 1,
-  "note": "架空の大人の女性キャラクター。名前・性格・声は元の系統(人気ランキングの『タイプ』)をもとにした創作で、実在の人物とは無関係。実在人物のなりきりは作らない。",
+  "note": "架空の大人の女性キャラクター。名前・性格・声は元の系統(人気ランキングの『タイプ』)をもとにした創作で、実在の人物とは無関係。実在人物のなりきりは作らない。 声は『実写版』と『アニメ版(A・B)』で別設定。アニメ版だけ声を高く・明るく・表情ゆたかにしている。名前・性格・話し方は共通。",
   "patterns": {
     "A": "第1パターン: output/before の最初の9枚(柔らかいアイドル風)",
-    "B": "第2パターン: 採用の9枚(童顔寄り・肩ひもなし、sheet_adopted9c.jpg)"
+    "B": "第2パターン: 採用の9枚(童顔寄り・肩ひもなし、sheet_adopted9c.jpg)",
+    "anime_A": "アニメA(実物風アニメ): output/anime_final/anime_XX_A.png",
+    "anime_B": "アニメB(完全アニメ): output/anime_final/anime_XX_B.png"
   },
   "characters": [
     {
@@ -28,9 +30,27 @@
       "seed_B": 511,
       "files": {
         "A": "output/before/01_soothing.png",
-        "B": "output/before/01_soothing.png"
+        "B": "output/before/01_soothing.png",
+        "anime_A": "output/anime_final/anime_01_A.png",
+        "anime_B": "output/anime_final/anime_01_B.png"
       },
-      "recipe_B": "第2パターンでは新規生成せず、第1パターンの画像をそのまま採用(ユーザー承認)。"
+      "recipe_B": "第2パターンでは新規生成せず、第1パターンの画像をそのまま採用(ユーザー承認)。",
+      "voice_anime": {
+        "A": {
+          "tone": "やわらかく甘い、ふんわりしたお姉さん声(実物風アニメ用。実写版より少し高く、表情ゆたかに)",
+          "half_tone": 3.0,
+          "speed": 1.0
+        },
+        "B": {
+          "tone": "やわらかく甘い、ふんわりしたお姉さん声(完全アニメ用。いちばん高く、アニメらしく明るく)",
+          "half_tone": 6.0,
+          "speed": 1.04
+        }
+      },
+      "lines_anime": [
+        "えへへ、ゆっくりでだいじょうぶだよ〜",
+        "おつかれさま〜。いっしょにひと休みしよっか?"
+      ]
     },
     {
       "id": "02",
@@ -54,9 +74,27 @@
       "seed_B": 424,
       "files": {
         "A": "output/before/02_classic.png",
-        "B": "output/final_02_classic.png"
+        "B": "output/final_02_classic.png",
+        "anime_A": "output/anime_final/anime_02_A.png",
+        "anime_B": "output/anime_final/anime_02_B.png"
       },
-      "recipe_B": "ChilloutMix(txt2img)・seed 424・4パターン目を採用。命令文の骨組みは docs/IMAGE_PIPELINE.md の「童顔・上品」テンプレート。"
+      "recipe_B": "ChilloutMix(txt2img)・seed 424・4パターン目を採用。命令文の骨組みは docs/IMAGE_PIPELINE.md の「童顔・上品」テンプレート。",
+      "voice_anime": {
+        "A": {
+          "tone": "透き通った高めの、ひかえめで凛とした声(実物風アニメ用。実写版より少し高く、表情ゆたかに)",
+          "half_tone": 4.0,
+          "speed": 1.0
+        },
+        "B": {
+          "tone": "透き通った高めの、ひかえめで凛とした声(完全アニメ用。いちばん高く、アニメらしく明るく)",
+          "half_tone": 7.0,
+          "speed": 1.04
+        }
+      },
+      "lines_anime": [
+        "……はい。ちゃんと、見ていますから。",
+        "今夜は静かですね。星がきれい……。"
+      ]
     },
     {
       "id": "03",
@@ -80,9 +118,27 @@
       "seed_B": 703,
       "files": {
         "A": "output/before/03_bright.png",
-        "B": "output/v7_03_bright_fixed.png"
+        "B": "output/v7_03_bright_fixed.png",
+        "anime_A": "output/anime_final/anime_03_A.png",
+        "anime_B": "output/anime_final/anime_03_B.png"
       },
-      "recipe_B": "Realistic Vision(txt2img,seed703)に首から下インペイントを重ね、継ぎ目を画素補修したもの(部分修正済み)。"
+      "recipe_B": "Realistic Vision(txt2img,seed703)に首から下インペイントを重ね、継ぎ目を画素補修したもの(部分修正済み)。",
+      "voice_anime": {
+        "A": {
+          "tone": "元気いっぱいの高い声、語尾がはねる(実物風アニメ用。実写版より少し高く、表情ゆたかに)",
+          "half_tone": 6.0,
+          "speed": 1.16
+        },
+        "B": {
+          "tone": "元気いっぱいの高い声、語尾がはねる(完全アニメ用。いちばん高く、アニメらしく明るく)",
+          "half_tone": 9.0,
+          "speed": 1.21
+        }
+      },
+      "lines_anime": [
+        "よーし、いっくよー!",
+        "やってみよっ!ぜったいなんとかなるっ!"
+      ]
     },
     {
       "id": "04",
@@ -106,9 +162,27 @@
       "seed_B": 804,
       "files": {
         "A": "output/before/04_cute.png",
-        "B": "output/v6_04_cute_fixed.png"
+        "B": "output/v6_04_cute_fixed.png",
+        "anime_A": "output/anime_final/anime_04_A.png",
+        "anime_B": "output/anime_final/anime_04_B.png"
       },
-      "recipe_B": "Realistic Vision(txt2img,seed804)の顔を残し、首から下をインペイントして継ぎ目補修(部分修正済み)。"
+      "recipe_B": "Realistic Vision(txt2img,seed804)の顔を残し、首から下をインペイントして継ぎ目補修(部分修正済み)。",
+      "voice_anime": {
+        "A": {
+          "tone": "あまくてかわいい高音、舌足らずっぽい声(実物風アニメ用。実写版より少し高く、表情ゆたかに)",
+          "half_tone": 7.5,
+          "speed": 1.16
+        },
+        "B": {
+          "tone": "あまくてかわいい高音、舌足らずっぽい声(完全アニメ用。いちばん高く、アニメらしく明るく)",
+          "half_tone": 10.5,
+          "speed": 1.21
+        }
+      },
+      "lines_anime": [
+        "えへへ、ありがとっ!うれしいなぁ。",
+        "ねぇねぇ見て見て!いいことあったのっ!"
+      ]
     },
     {
       "id": "05",
@@ -132,9 +206,27 @@
       "seed_B": 305,
       "files": {
         "A": "output/before/05_calm.png",
-        "B": "output/before/05_calm.png"
+        "B": "output/before/05_calm.png",
+        "anime_A": "output/anime_final/anime_05_A.png",
+        "anime_B": "output/anime_final/anime_05_B.png"
       },
-      "recipe_B": "第2パターンでも第1パターンの画像をそのまま採用(ユーザー承認)。"
+      "recipe_B": "第2パターンでも第1パターンの画像をそのまま採用(ユーザー承認)。",
+      "voice_anime": {
+        "A": {
+          "tone": "明るくてさっぱりした、少しハスキーな声(実物風アニメ用。実写版より少し高く、表情ゆたかに)",
+          "half_tone": 2.5,
+          "speed": 1.05
+        },
+        "B": {
+          "tone": "明るくてさっぱりした、少しハスキーな声(完全アニメ用。いちばん高く、アニメらしく明るく)",
+          "half_tone": 5.5,
+          "speed": 1.1
+        }
+      },
+      "lines_anime": [
+        "まあまあ、のんびりいこうよ〜。",
+        "それ、ちょっといいかもっ!"
+      ]
     },
     {
       "id": "06",
@@ -158,9 +250,27 @@
       "seed_B": 461,
       "files": {
         "A": "output/before/06_intelligent.png",
-        "B": "output/final_06_intelligent.png"
+        "B": "output/final_06_intelligent.png",
+        "anime_A": "output/anime_final/anime_06_A.png",
+        "anime_B": "output/anime_final/anime_06_B.png"
       },
-      "recipe_B": "ChilloutMix(txt2img)・seed 461・1パターン目を採用。"
+      "recipe_B": "ChilloutMix(txt2img)・seed 461・1パターン目を採用。",
+      "voice_anime": {
+        "A": {
+          "tone": "すずやかで知的な、はっきりした声(実物風アニメ用。実写版より少し高く、表情ゆたかに)",
+          "half_tone": 3.5,
+          "speed": 1.05
+        },
+        "B": {
+          "tone": "すずやかで知的な、はっきりした声(完全アニメ用。いちばん高く、アニメらしく明るく)",
+          "half_tone": 6.5,
+          "speed": 1.1
+        }
+      },
+      "lines_anime": [
+        "なるほど。要点をまとめるね。",
+        "あせらなくていいよ。順番に考えよう。"
+      ]
     },
     {
       "id": "07",
@@ -184,9 +294,27 @@
       "seed_B": 701,
       "files": {
         "A": "output/before/07_dignified.png",
-        "B": "output/final_07_dignified.png"
+        "B": "output/final_07_dignified.png",
+        "anime_A": "output/anime_final/anime_07_A.png",
+        "anime_B": "output/anime_final/anime_07_B.png"
       },
-      "recipe_B": "ChilloutMix(txt2img)・seed 701・1パターン目を採用(腕を画面外にする指示が必要)。"
+      "recipe_B": "ChilloutMix(txt2img)・seed 701・1パターン目を採用(腕を画面外にする指示が必要)。",
+      "voice_anime": {
+        "A": {
+          "tone": "おちついた艶のある、上品なお姉さん声(実物風アニメ用。実写版より少し高く、表情ゆたかに)",
+          "half_tone": 2.0,
+          "speed": 0.97
+        },
+        "B": {
+          "tone": "おちついた艶のある、上品なお姉さん声(完全アニメ用。いちばん高く、アニメらしく明るく)",
+          "half_tone": 5.0,
+          "speed": 1.01
+        }
+      },
+      "lines_anime": [
+        "ふふ。堂々としていなさい。",
+        "いい選択ですよ。胸を張って。"
+      ]
     },
     {
       "id": "08",
@@ -210,9 +338,27 @@
       "seed_B": 281,
       "files": {
         "A": "output/before/08_fresh.png",
-        "B": "output/final_08_fresh.png"
+        "B": "output/final_08_fresh.png",
+        "anime_A": "output/anime_final/anime_08_A.png",
+        "anime_B": "output/anime_final/anime_08_B.png"
       },
-      "recipe_B": "ChilloutMix(txt2img)・seed 281。docs/IMAGE_PIPELINE.md の「ゴールデン例」参照(同条件で再現確認済み)。"
+      "recipe_B": "ChilloutMix(txt2img)・seed 281。docs/IMAGE_PIPELINE.md の「ゴールデン例」参照(同条件で再現確認済み)。",
+      "voice_anime": {
+        "A": {
+          "tone": "澄みきった軽やかな高音、元気でさわやか(実物風アニメ用。実写版より少し高く、表情ゆたかに)",
+          "half_tone": 5.5,
+          "speed": 1.1
+        },
+        "B": {
+          "tone": "澄みきった軽やかな高音、元気でさわやか(完全アニメ用。いちばん高く、アニメらしく明るく)",
+          "half_tone": 8.5,
+          "speed": 1.16
+        }
+      },
+      "lines_anime": [
+        "おはようございますっ!今日もいい天気ですね!",
+        "いっしょにがんばりましょうっ!"
+      ]
     },
     {
       "id": "09",
@@ -236,9 +382,27 @@
       "seed_B": 809,
       "files": {
         "A": "output/before/09_glam.png",
-        "B": "output/v8_09_glam_fixed.png"
+        "B": "output/v8_09_glam_fixed.png",
+        "anime_A": "output/anime_final/anime_09_A.png",
+        "anime_B": "output/anime_final/anime_09_B.png"
       },
-      "recipe_B": "Realistic Vision(txt2img,seed809)の顔を残し首から下をインペイントして補修(部分修正済み)。"
+      "recipe_B": "Realistic Vision(txt2img,seed809)の顔を残し首から下をインペイントして補修(部分修正済み)。",
+      "voice_anime": {
+        "A": {
+          "tone": "華やかで抑揚の大きい、ハイテンションな声(実物風アニメ用。実写版より少し高く、表情ゆたかに)",
+          "half_tone": 6.5,
+          "speed": 1.18
+        },
+        "B": {
+          "tone": "華やかで抑揚の大きい、ハイテンションな声(完全アニメ用。いちばん高く、アニメらしく明るく)",
+          "half_tone": 9.5,
+          "speed": 1.23
+        }
+      },
+      "lines_anime": [
+        "ねぇねぇ聞いて聞いて!めっちゃ楽しかったのっ!",
+        "みんな来てくれてありがとー!だいすきっ!"
+      ]
     }
   ]
 }
