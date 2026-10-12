@@ -23,6 +23,7 @@ pipe = AnimateDiffVideoToVideoPipeline.from_pretrained(BASE, motion_adapter=adap
 pipe.scheduler = LCMScheduler.from_config(pipe.scheduler.config, beta_schedule="linear")
 pipe.load_lora_weights("latent-consistency/lcm-lora-sdv1-5", weight_name="pytorch_lora_weights.safetensors")
 pipe.fuse_lora()
+pipe.enable_vae_slicing()   # メモリ節約(1枚ずつ処理)
 print("読み込み:", round(time.time() - t0), "秒", flush=True)
 img = Image.open(src).convert("RGB").resize((W, H), Image.LANCZOS)
 video = [img] * n
