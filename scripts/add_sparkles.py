@@ -50,65 +50,89 @@ bg = np.asarray(bg_img) > 0
 GOLD = np.array([255, 214, 120], float)
 WHITE = np.array([255, 250, 225], float)
 
-# 2. 後光: 人物(背景でない所)のまわりがやわらかく金色に光る
-person = Image.fromarray(((~bg) * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(20))
+# 2. 後光: 人物のまわりが、なめらかに金色に光る(近いほど明るく、遠いほど深いあめ色)
+person = Image.fromarray(((~bg) * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(12))
 halo = np.asarray(person, float)[..., None] / 255.0
-halo = np.clip(halo * 2.0, 0, 1) * 0.95
+halo = np.clip(halo * 1.4, 0, 1) ** 2.2 * 0.7
+COL_NEAR = np.array([255, 236, 190], float)
+COL_FAR = np.array([232, 150, 40], float)
 
-# 3. 放射状の光線(頭のうしろから)
+# 3. 放射状の光線: ごく淡く、ふんわり
 rays = Image.new("L", (W, H), 0)
 d = ImageDraw.Draw(rays)
-n = 22
+n = 14
 for k in range(n):
-    ang = 2 * math.pi * k / n + 0.07
-    half = math.pi / n * 0.28
+    ang = 2 * math.pi * k / n + 0.11
+    half = math.pi / n * 0.35
     R = 1200
-    pts = [(cx, cy), (cx + R * math.cos(ang - half), cy + R * math.sin(ang - half)),
-           (cx + R * math.cos(ang + half), cy + R * math.sin(ang + half))]
-    d.polygon(pts, fill=255)
-rays = np.asarray(rays.filter(ImageFilter.GaussianBlur(2)), float)[..., None] / 255.0 * 0.55
+    d.polygon([(cx, cy), (cx + R * math.cos(ang - half), cy + R * math.sin(ang - half)),
+               (cx + R * math.cos(ang + half), cy + R * math.sin(ang + half))], fill=255)
+rays = np.asarray(rays.filter(ImageFilter.GaussianBlur(9)), float)[..., None] / 255.0 * 0.0
 
-# 4. キラキラ(大小の4つ星と光の粒)。背景だけに置く
-rng = np.random.default_rng(7)
-star = Image.new("L", (W, H), 0)
-dot = Image.new("L", (W, H), 0)
-sd, dd = ImageDraw.Draw(star), ImageDraw.Draw(dot)
+# 4. 光のボケ(やわらかい円)と、細く長い上品な星
+rng = np.random.default_rng(11)
 
 
-def free(x, y, r):
-    y0, y1, x0, x1 = max(0, y - r - 4), min(H, y + r + 5), max(0, x - r - 4), min(W, x + r + 5)
-    return bg[y0:y1, x0:x1].mean() > 0.97
+def free(x, y, r, frac=0.93):
+    y0, y1, x0, x1 = max(0, y - r - 3), min(H, y + r + 4), max(0, x - r - 3), min(W, x + r + 4)
+    return bg[y0:y1, x0:x1].mean() > frac
 
 
-placed = 0
-tries = 0
-while placed < 38 and tries < 4000:
+bokeh = np.zeros((H, W), float)
+placed, tries = 0, 0
+while placed < 0 and tries < 6000:
     tries += 1
-    x, y = int(rng.integers(8, W - 8)), int(rng.integers(8, H - 8))
-    r = int(rng.choice([5, 7, 9, 12, 16, 20], p=[0.25, 0.25, 0.2, 0.15, 0.1, 0.05]))
+    x, y = int(rng.integers(10, W - 10)), int(rng.integers(10, H - 10))
+    r = int(rng.choice([6, 9, 13, 18, 26], p=[0.3, 0.3, 0.2, 0.14, 0.06]))
     if not free(x, y, r):
         continue
-    k = r * 0.2
-    sd.polygon([(x, y - r), (x + k, y - k), (x + r, y), (x + k, y + k), (x, y + r), (x - k, y + k), (x - r, y), (x - k, y - k)], fill=255)
-    placed += 1
-for _ in range(700):
-    x, y = int(rng.integers(5, W - 5)), int(rng.integers(5, H - 5))
-    r = int(rng.choice([1, 2, 3]))
-    if free(x, y, r):
-        dd.ellipse((x - r, y - r, x + r, y + r), fill=255)
-star_core = np.asarray(star, float)[..., None] / 255.0
-dot_core = np.asarray(dot, float)[..., None] / 255.0
-glow = np.asarray(Image.fromarray(np.maximum(np.asarray(star), np.asarray(dot))).filter(ImageFilter.GaussianBlur(6)), float)[..., None] / 255.0
+    layer = Image.new("L", (W, H), 0)
+    ld = ImageDraw.Draw(layer)
+    ld.ellipse((x - r, y - r, x + r, y + r), fill=int(rng.uniform(110, 200)))
+    bokeh = np.maximum(bokeh, np.asarray(layer.filter(ImageFilter.GaussianBlur(max(2.0, r / 2.2))), float) / 255.0)
 
-# 5. 合成。背景の画素だけを変える
+star = Image.new("L", (W, H), 0)
+sd = ImageDraw.Draw(star)
+placed, tries = 0, 0
+while placed < 14 and tries < 6000:
+    tries += 1
+    x, y = int(rng.integers(14, W - 14)), int(rng.integers(14, H - 14))
+    r = int(rng.choice([10, 16, 24, 34], p=[0.4, 0.3, 0.2, 0.1]))
+    if not free(x, y, r, 0.97):
+        continue
+    k = r * 0.07
+    sd.polygon([(x, y - r), (x + k, y - k), (x + r, y), (x + k, y + k), (x, y + r), (x - k, y + k), (x - r, y), (x - k, y - k)], fill=255)
+    rr = r * 0.45
+    k2 = rr * 0.12
+    sd.polygon([(x, y - rr), (x + k2, y - k2), (x + rr, y), (x + k2, y + k2), (x, y + rr), (x - k2, y + k2), (x - rr, y), (x - k2, y - k2)], fill=255)
+    placed += 1
+dots = 0
+tries = 0
+dd = ImageDraw.Draw(star)
+while dots < 34 and tries < 4000:
+    tries += 1
+    x, y = int(rng.integers(8, W - 8)), int(rng.integers(8, H - 8))
+    r = int(rng.choice([1, 2], p=[0.6, 0.4]))
+    if free(x, y, r, 0.97):
+        dd.ellipse((x - r, y - r, x + r, y + r), fill=int(rng.uniform(140, 255)))
+        dots += 1
+star_a = np.asarray(star, float) / 255.0
+star_glow = np.asarray(star.filter(ImageFilter.GaussianBlur(7)), float) / 255.0
+bokeh_a = bokeh[..., None] * 0.6
+star_core = star_a[..., None]
+star_gl = np.clip(star_glow * 1.8, 0, 1)[..., None] * 0.7
+
+# 5. 合成。背景の画素だけを変える(黒の背景を、あめ色→金色のなめらかなグラデーションに置き換える)
 base = a.astype(float)
 bgm = bg[..., None].astype(float)
-light = np.clip(halo + rays, 0, 0.95)
-out = base * (1 - light * bgm) + GOLD * (light * bgm)
-g = np.clip(glow * 0.9, 0, 1) * bgm
-out = out * (1 - g) + GOLD * g
-core = np.clip(star_core + dot_core, 0, 1) * bgm
-out = out * (1 - core) + WHITE * core
+t = np.clip(halo / 0.7, 0, 1) ** 0.85
+FAR, MID, NEAR = np.array([0, 0, 0], float), np.array([96, 52, 14], float), np.array([236, 190, 100], float)
+grad = np.where(t < 0.5, FAR + (MID - FAR) * (t / 0.5), MID + (NEAR - MID) * ((t - 0.5) / 0.5))
+out = grad
+out = out * (1 - rays * 0.8) + np.array([255, 226, 150], float) * (rays * 0.8)
+out = out * (1 - bokeh_a * 0.8) + np.array([255, 236, 180], float) * (bokeh_a * 0.8)
+out = out * (1 - star_gl) + np.array([255, 226, 150], float) * star_gl
+out = out * (1 - star_core) + np.array([255, 253, 240], float) * star_core
 out = np.where(bgm > 0, out, base)
 res = np.clip(out, 0, 255).astype(np.uint8)
 Image.fromarray(res).save(dst)
