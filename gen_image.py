@@ -30,13 +30,14 @@ def main():
     ap.add_argument("--height", type=int, default=0, help="縦の長さ(0なら正方形)")
     ap.add_argument("--model", default=BASE, help="使うモデル(Hugging Face名)")
     ap.add_argument("--negative", default="", help="出してほしくないもの(英語)")
+    ap.add_argument("--variant", default=None, help="fp16 など(モデルに軽量版があるとき)")
     ap.add_argument("--guidance", type=float, default=1.0, help="指示への従い度(出してほしくないものを使うなら1.5前後)")
     a = ap.parse_args()
 
     torch.set_num_threads(4)
     # .bin形式の古いモデルは、プログラムが実行されない安全モード(weights_only)で読み込まれる
     pipe = DiffusionPipeline.from_pretrained(a.model, torch_dtype=torch.float32, safety_checker=None,
-                                             use_safetensors=a.model == BASE or "Realistic_Vision" in a.model)
+                                             use_safetensors="chilloutmix" not in a.model, variant=a.variant)
     pipe.scheduler = LCMScheduler.from_config(pipe.scheduler.config)
     pipe.load_lora_weights(LCM, weight_name="pytorch_lora_weights.safetensors")
     pipe.fuse_lora()
