@@ -1,0 +1,61 @@
+{
+  "note": "採用画像の厳密な再現用。ここの指示文・seed・モデルをそのまま使えば、同じ画像が出る。08は再現確認済み。服の指示と実際の絵がずれることがあるのは、モデルが指示を守らないため(02は指示が灰色ニットでも、実際は白い服だった)。",
+  "recipes": [
+    {
+      "id": "02",
+      "file": "output/final_02_classic.png",
+      "model": "stablediffusionapi/chilloutmix",
+      "seed": 424,
+      "steps": 8,
+      "guidance": 1.5,
+      "size": [
+        512,
+        768
+      ],
+      "prompt": "photo, adult woman in her mid 20s, upper body portrait, loose oversized knit sweater, slim petite build, small bust, flat chest line, natural black hair, natural skin tone, glossy smooth skin, youthful soft face, gentle round eyes, soft rounded cheeks, soft indoor light, refined classic japanese woman, clear translucent skin, long straight black hair with bangs, gray knit sweater with a wide neckline that slips slightly off one shoulder, quiet elegant expression, neutral gray wall",
+      "negative": "nsfw, nude, naked, cleavage, breasts, deep neckline, low-cut, plunging, revealing, strap, tank top, camisole, bra, see-through, sheer, transparent, tight clothing, form-fitting, large breasts, busty, sexy, child, childlike, little girl, baby, teenager, teen, underage, schoolgirl, school uniform, pink hair, colored hair, green hair, purple hair, monochrome, black and white, (anime, cartoon, drawing, 3d render:1.3), text, watermark, deformed, bad anatomy, extra fingers, blurry, low quality, two faces, duplicate, freckles, blotchy skin, hands"
+    },
+    {
+      "id": "06",
+      "file": "output/final_06_intelligent.png",
+      "model": "stablediffusionapi/chilloutmix",
+      "seed": 461,
+      "steps": 8,
+      "guidance": 1.5,
+      "size": [
+        512,
+        768
+      ],
+      "prompt": "photo, adult woman in her mid 20s, upper body portrait, loose oversized knit sweater, slim petite build, small bust, flat chest line, natural black hair, natural skin tone, glossy smooth skin, youthful soft face, gentle round eyes, soft rounded cheeks, soft indoor light, intelligent composed japanese woman, straight black bob hair with bangs, cream knit sweater with a shallow V-neck, thoughtful gentle expression, beige wall",
+      "negative": "nsfw, nude, naked, cleavage, breasts, deep neckline, low-cut, plunging, revealing, strap, tank top, camisole, bra, see-through, sheer, transparent, tight clothing, form-fitting, large breasts, busty, sexy, child, childlike, little girl, baby, teenager, teen, underage, schoolgirl, school uniform, pink hair, colored hair, green hair, purple hair, monochrome, black and white, (anime, cartoon, drawing, 3d render:1.3), text, watermark, deformed, bad anatomy, extra fingers, blurry, low quality, two faces, duplicate, freckles, blotchy skin, hands, turtleneck"
+    },
+    {
+      "id": "07",
+      "file": "output/final_07_dignified.png",
+      "model": "stablediffusionapi/chilloutmix",
+      "seed": 701,
+      "steps": 8,
+      "guidance": 1.5,
+      "size": [
+        512,
+        768
+      ],
+      "prompt": "photo, adult woman in her mid 20s, head and shoulders portrait, arms straight down out of frame, loose dark green knit sweater with a wide neckline slipping slightly off one shoulder, slim petite build, small bust, dignified elegant japanese woman, long glossy dark hair, calm gaze, glossy smooth skin, youthful soft face, soft indoor light, window and sofa background",
+      "negative": "crossed arms, folded arms, hand on arm, hand on shoulder, hugging herself, hands, strap, straps, tank top, camisole, bra, nsfw, nude, naked, cleavage, breasts, deep neckline, low-cut, plunging, revealing, see-through, sheer, transparent, tight clothing, large breasts, busty, sexy, child, childlike, little girl, baby, teenager, teen, underage, schoolgirl, pink hair, colored hair, green hair, monochrome, (anime, cartoon, drawing, 3d render:1.3), text, watermark, deformed, bad anatomy, blurry, low quality, two faces, duplicate, freckles, blotchy skin"
+    },
+    {
+      "id": "08",
+      "file": "output/final_08_fresh.png",
+      "model": "stablediffusionapi/chilloutmix",
+      "seed": 281,
+      "steps": 8,
+      "guidance": 1.5,
+      "size": [
+        512,
+        768
+      ],
+      "prompt": "photo, adult woman in her mid 20s, head and shoulders portrait, (high round crew neckline close to the neck:1.4), thick opaque loose knit sweater covering the collarbone and shoulders, glossy smooth skin, youthful soft face, gentle round eyes, soft rounded cheeks, soft indoor light, fresh clean japanese woman, natural makeup, translucent skin, soft medium-long hair, thick white cotton sweatshirt with a high round neck, warm natural smile, soft green background",
+      "negative": "nsfw, nude, naked, cleavage, breasts, low-cut, v-neck, scoop neck, wide neckline, boat neck, deep neckline, revealing, bare shoulders, bare collarbone, off-shoulder, strap, tank top, camisole, see-through, sheer, transparent, tight clothing, large breasts, busty, sexy, child, childlike, little girl, baby, teenager, teen, underage, schoolgirl, school uniform, pink hair, colored hair, (anime, cartoon, drawing, 3d render:1.3), text, watermark, deformed, bad anatomy, extra fingers, blurry, low quality, two faces, duplicate, freckles, blotchy skin, hands"
+    }
+  ]
+}

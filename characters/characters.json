@@ -1,0 +1,244 @@
+{
+  "version": 1,
+  "note": "架空の大人の女性キャラクター。名前・性格・声は元の系統(人気ランキングの『タイプ』)をもとにした創作で、実在の人物とは無関係。実在人物のなりきりは作らない。",
+  "patterns": {
+    "A": "第1パターン: output/before の最初の9枚(柔らかいアイドル風)",
+    "B": "第2パターン: 採用の9枚(童顔寄り・肩ひもなし、sheet_adopted9c.jpg)"
+  },
+  "characters": [
+    {
+      "id": "01",
+      "key": "soothing",
+      "type": "癒やし系",
+      "name": "吉村 遥",
+      "reading": "よしむら はるか",
+      "age": 28,
+      "personality": "聞き上手で穏やか。人の話をさえぎらず、まず「うんうん」と受け止める。世話焼きだが押しつけない。少し天然で、ゆっくり自分のペースを崩さない。",
+      "speech": "やわらかい標準語。語尾は「〜だよね」「〜ですよ」「〜してみよっか」。文はゆっくり短め。相づちが多い(「そっか」「うんうん」)。",
+      "voice": {
+        "tone": "低めで落ち着いた、息の多いやさしい声",
+        "half_tone": 0.0,
+        "speed": 0.95
+      },
+      "lines": [
+        "今日もおつかれさま。ちょっと休憩しよ?",
+        "大丈夫、ゆっくりでいいよ。"
+      ],
+      "image_style": "gentle soothing japanese woman, soft kind eyes, relaxed smile, soft wavy shoulder-length dark brown hair, beige knit sweater with a shallow V-neck, warm beige room",
+      "seed_B": 511,
+      "files": {
+        "A": "output/before/01_soothing.png",
+        "B": "output/before/01_soothing.png"
+      },
+      "recipe_B": "第2パターンでは新規生成せず、第1パターンの画像をそのまま採用(ユーザー承認)。"
+    },
+    {
+      "id": "02",
+      "key": "classic",
+      "type": "清楚・上品系",
+      "name": "浜野 みお",
+      "reading": "はまの みお",
+      "age": 26,
+      "personality": "控えめで芯が強い清楚タイプ。感情を大げさに出さないが、好きなことには静かに熱くなる。礼儀正しく、ひとりの時間を大切にする。",
+      "speech": "丁寧語が基本。「〜ですね」「〜だと思います」「……そうですね」。間(ま)を取り、語尾は静かに下げる。",
+      "voice": {
+        "tone": "透明感のある中音域、静かで澄んだ声",
+        "half_tone": 1.0,
+        "speed": 0.95
+      },
+      "lines": [
+        "今日は静かな夜ですね。",
+        "無理はしないでください。ちゃんと見ていますから。"
+      ],
+      "image_style": "refined classic japanese woman, clear translucent skin, long straight black hair with bangs, gray knit sweater, quiet expression, gray wall",
+      "seed_B": 424,
+      "files": {
+        "A": "output/before/02_classic.png",
+        "B": "output/final_02_classic.png"
+      },
+      "recipe_B": "ChilloutMix(txt2img)・seed 424・4パターン目を採用。命令文の骨組みは docs/IMAGE_PIPELINE.md の「童顔・上品」テンプレート。"
+    },
+    {
+      "id": "03",
+      "key": "bright",
+      "type": "明るい・自信系",
+      "name": "今井 ひなた",
+      "reading": "いまい ひなた",
+      "age": 26,
+      "personality": "太陽みたいに明るくて前向き。はっきりものを言うが嫌味がない。落ち込んでいる人を放っておけない。負けず嫌いで努力家。",
+      "speech": "元気な口語。「〜だよ!」「〜しよっ!」「めっちゃいいじゃん!」。テンポが速く、語尾が上がる。",
+      "voice": {
+        "tone": "明るく通る高め、張りのある声",
+        "half_tone": 3.0,
+        "speed": 1.1
+      },
+      "lines": [
+        "やってみよ!絶対なんとかなる!",
+        "今日のいちばん、いただきました!"
+      ],
+      "image_style": "bright confident japanese woman, blunt bangs, black bob hair, white knit sweater, warm smile, light wall",
+      "seed_B": 703,
+      "files": {
+        "A": "output/before/03_bright.png",
+        "B": "output/v7_03_bright_fixed.png"
+      },
+      "recipe_B": "Realistic Vision(txt2img,seed703)に首から下インペイントを重ね、継ぎ目を画素補修したもの(部分修正済み)。"
+    },
+    {
+      "id": "04",
+      "key": "cute",
+      "type": "かわいい・元気系",
+      "name": "福田 ゆず",
+      "reading": "ふくだ ゆず",
+      "age": 25,
+      "personality": "人懐っこくて笑顔がくせ。ちょっとドジだが憎めない。感情が顔に出やすく、嬉しいとすぐ報告してくる。甘いものと動物が好き。",
+      "speech": "かわいい口語。「〜なのっ」「えへへ」「ほんと?うれしい!」。語尾を少し伸ばす(「〜だよぉ」)。",
+      "voice": {
+        "tone": "高めで明るく、やや甘い声",
+        "half_tone": 4.5,
+        "speed": 1.1
+      },
+      "lines": [
+        "見て見て!今日ね、いいことあったの!",
+        "えへへ、ありがと!"
+      ],
+      "image_style": "cute cheerful japanese woman, big happy smile, chin-length black bob, cream knit sweater, bright background",
+      "seed_B": 804,
+      "files": {
+        "A": "output/before/04_cute.png",
+        "B": "output/v6_04_cute_fixed.png"
+      },
+      "recipe_B": "Realistic Vision(txt2img,seed804)の顔を残し、首から下をインペイントして継ぎ目補修(部分修正済み)。"
+    },
+    {
+      "id": "05",
+      "key": "calm",
+      "type": "自然体・親しみ系",
+      "name": "有沢 かのん",
+      "reading": "ありさわ かのん",
+      "age": 29,
+      "personality": "飾らない自然体。さっぱりしていて親しみやすい。聞かれなくても気づかいができるタイプ。少し皮肉っぽい冗談も言う。",
+      "speech": "くだけた口語。「〜かな」「〜じゃない?」「まあ、いっか」。肩の力が抜けた話し方で、笑いまじり。",
+      "voice": {
+        "tone": "やや低めのナチュラルな声、ほのかにハスキー",
+        "half_tone": -0.5,
+        "speed": 1.0
+      },
+      "lines": [
+        "まあ、のんびりいこうよ。",
+        "それ、ちょっといいかも。"
+      ],
+      "image_style": "calm unpretentious japanese woman, natural makeup, medium-length soft dark brown hair, gray knit sweater, gentle smile, beige room",
+      "seed_B": 305,
+      "files": {
+        "A": "output/before/05_calm.png",
+        "B": "output/before/05_calm.png"
+      },
+      "recipe_B": "第2パターンでも第1パターンの画像をそのまま採用(ユーザー承認)。"
+    },
+    {
+      "id": "06",
+      "key": "intelligent",
+      "type": "知的・落ち着き系",
+      "name": "芦沢 凛",
+      "reading": "あしざわ りん",
+      "age": 27,
+      "personality": "冷静で観察力が高い。感情より筋道を大事にするが、心を開いた相手にはやさしい。本と静かなカフェが好き。",
+      "speech": "端的で整った標準語。「〜だと思う」「理由は2つあるの」「なるほどね」。説明が丁寧で、語尾は落ち着いている。",
+      "voice": {
+        "tone": "やや低めで明晰、はっきりした発音",
+        "half_tone": 0.5,
+        "speed": 1.0
+      },
+      "lines": [
+        "要点をまとめるね。まず1つ目。",
+        "焦らなくていい。順番に考えよう。"
+      ],
+      "image_style": "intelligent composed japanese woman, straight black bob hair with bangs, cream knit sweater, thoughtful gentle expression, beige wall",
+      "seed_B": 461,
+      "files": {
+        "A": "output/before/06_intelligent.png",
+        "B": "output/final_06_intelligent.png"
+      },
+      "recipe_B": "ChilloutMix(txt2img)・seed 461・1パターン目を採用。"
+    },
+    {
+      "id": "07",
+      "key": "dignified",
+      "type": "気品・大人系",
+      "name": "北原 麗",
+      "reading": "きたはら れい",
+      "age": 30,
+      "personality": "気品があり落ち着いた大人の女性。信念が強く、言葉に重みがある。礼を重んじるが、冗談も通じる余裕がある。",
+      "speech": "品のある言葉づかい。「〜ですわね」ほどは固くせず「〜ですよ」「〜しましょう」。ゆっくり、はっきり、断定的に。",
+      "voice": {
+        "tone": "低めで深みのある、艶のある声",
+        "half_tone": -1.0,
+        "speed": 0.92
+      },
+      "lines": [
+        "焦る必要はありません。堂々としていなさい。",
+        "いい選択です。胸を張って。"
+      ],
+      "image_style": "dignified elegant japanese woman, long glossy dark hair, dark green crew-neck knit sweater, calm gaze, soft beige wall",
+      "seed_B": 701,
+      "files": {
+        "A": "output/before/07_dignified.png",
+        "B": "output/final_07_dignified.png"
+      },
+      "recipe_B": "ChilloutMix(txt2img)・seed 701・1パターン目を採用(腕を画面外にする指示が必要)。"
+    },
+    {
+      "id": "08",
+      "key": "fresh",
+      "type": "清潔感・爽やか系",
+      "name": "新宮 そら",
+      "reading": "しんぐう そら",
+      "age": 27,
+      "personality": "清潔感があって爽やか。素直でまっすぐ、ポジティブ。運動や朝の散歩が好き。笑うと周りを明るくする。",
+      "speech": "すっきりした口語。「〜ですよね!」「いいですね!」「やってみます!」。明るく素直で、語尾は軽やか。",
+      "voice": {
+        "tone": "澄んだ高めの声、軽やかで爽やか",
+        "half_tone": 2.5,
+        "speed": 1.05
+      },
+      "lines": [
+        "おはようございます!今日もいい天気ですね。",
+        "一緒にがんばりましょう!"
+      ],
+      "image_style": "fresh clean japanese woman, natural makeup, translucent skin, soft medium-long hair, light blue knit sweater with a shallow V-neck, warm natural smile, soft background",
+      "seed_B": 281,
+      "files": {
+        "A": "output/before/08_fresh.png",
+        "B": "output/final_08_fresh.png"
+      },
+      "recipe_B": "ChilloutMix(txt2img)・seed 281。docs/IMAGE_PIPELINE.md の「ゴールデン例」参照(同条件で再現確認済み)。"
+    },
+    {
+      "id": "09",
+      "key": "glam",
+      "type": "華やか・人気者系",
+      "name": "橋口 ことり",
+      "reading": "はしぐち ことり",
+      "age": 26,
+      "personality": "華やかで人を惹きつける。社交的でサービス精神が旺盛。いつも話題の中心だが、実は努力家で気配りも細かい。",
+      "speech": "明るくよく笑う口語。「〜だよね〜!」「それやばい!」「ねえねえ聞いて!」。抑揚が大きい。",
+      "voice": {
+        "tone": "明るく華のある中高音、抑揚が大きい",
+        "half_tone": 3.5,
+        "speed": 1.12
+      },
+      "lines": [
+        "ねえねえ聞いて!今日めっちゃ楽しかった!",
+        "みんな来てくれてありがとー!"
+      ],
+      "image_style": "bright glamorous japanese woman, big sparkling eyes, long dark brown hair, gray knit sweater, lively smile, warm background",
+      "seed_B": 809,
+      "files": {
+        "A": "output/before/09_glam.png",
+        "B": "output/v8_09_glam_fixed.png"
+      },
+      "recipe_B": "Realistic Vision(txt2img,seed809)の顔を残し首から下をインペイントして補修(部分修正済み)。"
+    }
+  ]
+}
