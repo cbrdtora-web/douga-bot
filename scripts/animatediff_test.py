@@ -16,7 +16,9 @@ steps = int(sys.argv[7]) if len(sys.argv) > 7 else 6
 torch.set_num_threads(4)
 t0 = time.time()
 adapter = MotionAdapter.from_pretrained("guoyww/animatediff-motion-adapter-v1-5-3", torch_dtype=torch.float32, variant="fp16")
-pipe = AnimateDiffVideoToVideoPipeline.from_pretrained("Meina/MeinaMix_V11", motion_adapter=adapter, torch_dtype=torch.float32,
+import glob
+BASE = glob.glob("/root/.cache/huggingface/hub/models--Meina--MeinaMix_V11/snapshots/*")[0]   # 取得済みの場所を直接指定(安全チェック用の重みは不要)
+pipe = AnimateDiffVideoToVideoPipeline.from_pretrained(BASE, motion_adapter=adapter, torch_dtype=torch.float32,
                                                         safety_checker=None, use_safetensors=True)
 pipe.scheduler = LCMScheduler.from_config(pipe.scheduler.config, beta_schedule="linear")
 pipe.load_lora_weights("latent-consistency/lcm-lora-sdv1-5", weight_name="pytorch_lora_weights.safetensors")
