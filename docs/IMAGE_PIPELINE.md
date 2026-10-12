@@ -81,3 +81,11 @@ python scripts/contact_sheet.py output/sheet.jpg output/a.png output/b.png ... -
 ## 7. 参考: 画像ファイルの場所
 - 第1パターン(最初の9枚): `output/before/`
 - 第2パターン(採用の9枚): `output/sheet_adopted9c.jpg` と、`output/final_*.png`、`output/v7_03_bright_fixed.png`、`output/v6_04_cute_fixed.png`、`output/v8_09_glam_fixed.png`、`output/before/01_soothing.png`、`output/before/05_calm.png`
+
+## 8. アニメ画像(18枚: A=実物風アニメ、B=完全アニメ)
+- モデル: `Meina/MeinaMix_V11`(アニメ系・CreativeML OpenRAIL-M)。`Lykon/dreamshaper-8` も取得したが、アニメ絵を指定しても写真風になったため不採用。
+- 生成: `python scripts/generate_anime.py`(9人×A/B×3候補=54枚)。指示文は同スクリプトの SPEC と prompt()。
+- 採用した18枚: `output/anime_final/anime_{番号}_{A|B}.png`、一覧は `sheet_A_realistic.jpg` と `sheet_B_full_anime.jpg`。
+- 全員20代半ばの大人として指定。制服・子ども系の語は negative に入れる。胸元が見えるものは削除(04のB、06のA)。
+- 注意: 指示文が77語(トークン)を超えると末尾が切り捨てられる(髪型の指定が効かなくなることがある)。
+- 03のBは、ユーザーの個別依頼で `scripts/add_sparkles.py` により、背景だけに淡い金色のにじみと星を足した(人物の画素は変更なし)。部分修正に当たるので、依頼があるときだけ使う。
