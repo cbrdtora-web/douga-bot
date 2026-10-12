@@ -45,7 +45,7 @@ python scripts/generate_persona.py 02 06 --seeds 1 2 3 4 --out-prefix v31
 python scripts/contact_sheet.py output/sheet.jpg output/a.png output/b.png ... --cols 3
 ```
 - 1人あたり4〜6パターン作って、使えるものを選ぶのが基本(ChilloutMix は当たり外れが大きい)。
-- 同じ指示文・同じ seed(乱数の種)なら、ほぼ同じ画像が再現できる(08 番は再現を確認済み)。
+- 同じ指示文・同じ seed(乱数の種)なら、ほぼ同じ画像が再現できる(02・08 番は完全一致を確認済み)。
 - 指示文の骨組みは `scripts/generate_persona.py`(PROMPT_HEAD と NEG_BASE)。
   - 童顔寄り: `youthful soft face, gentle round eyes, soft rounded cheeks`(年齢は20代半ば。子どもっぽく見える語は避け、negative に child 系を必ず入れる)。
   - 服: `loose oversized knit sweater` + 首元の指定(strict なら丸首で肩を覆う、relaxed なら浅いVや肩出しまで可)。
