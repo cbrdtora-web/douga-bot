@@ -4,7 +4,9 @@ import time
 
 import torch
 from diffusers import AnimateDiffVideoToVideoPipeline, LCMScheduler, MotionAdapter
-from diffusers.utils import export_to_video
+import subprocess
+import tempfile
+from pathlib import Path
 from PIL import Image
 
 src, dst = sys.argv[1], sys.argv[2]
@@ -33,5 +35,8 @@ out = pipe(video=video, prompt="masterpiece, best quality, anime illustration, 1
            num_inference_steps=steps, guidance_scale=1.5, strength=strength, width=W, height=H,
            generator=torch.Generator().manual_seed(1)).frames[0]
 print("生成:", round(time.time() - t1), "秒 /", n, "コマ", flush=True)
-export_to_video(out, dst, fps=8)
+tmp = Path(tempfile.mkdtemp())
+for i, fr in enumerate(out):
+    fr.save(tmp / f"f{i:03d}.png")
+subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-framerate", "8", "-i", str(tmp / "f%03d.png"), "-pix_fmt", "yuv420p", dst], check=True)
 print("保存:", dst, flush=True)
