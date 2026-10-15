@@ -59,3 +59,27 @@
 - [The Best AI Anime Video Generators of 2026 - PixVerse](https://pixverse.ai/en/blog/best-ai-anime-video-generators-2026)
 - [Best AI video generator for consistent characters](https://blog.neural4d.com/comparisons/best-ai-video-generator-for-consistent-characters/)
 - [Viggle 2.0 - aixploria](https://www.aixploria.com/en/viggle-2-0-ai/)
+
+## 追記(2026-10-15): Gemini(Veo)と、全自動化の計画
+### Gemini(Veo 3.1)の評価
+- 公式の料金(Gemini API・1秒あたり・音声つき): Lite $0.05(720p)/$0.08(1080p)、Fast $0.10(720p)/$0.12(1080p)、Standard $0.40(720p・1080p)/$0.60(4K)。無料枠: **API には無い**(公式の料金ページに「Free Tier: Not available」)。
+- 1本は約8秒(第三者の計算)。20秒/日 = 3本(24秒)として: Lite 720p ≒ $1.2/日 ≒ $36/月、Fast 720p ≒ $2.4/日 ≒ $72/月、Standard ≒ $9.6/日。
+- 強み: 動きや物理の表現が強いとされる。**音声(セリフ・効果音)も同時に作れる**。公式APIで安定している。全自動に向く。
+- 不明: アニメ絵の人物の一貫性、参照画像の仕様と料金(確認できず)。→ 実際に試して確認する。
+- Gemini アプリ(画面)で作る場合は、Google AI の有料プランが必要で、自動化できない(検索結果より)。
+- 出典: [Gemini Developer API pricing](https://ai.google.dev/gemini-api/docs/pricing)、[Veo 3.1 pricing (2026) - Magic Hour](https://magichour.ai/blog/veo-3-pricing)
+
+### 全自動(Claude が作る)に必要なもの
+1. APIキー(読み取り・生成用)を、環境の「Network secrets / 環境変数」に入れる。**キーをチャットに貼らない**。
+2. 環境のネットワーク許可に、APIのドメインを足す(例: `generativelanguage.googleapis.com`、fal.ai を使うなら `fal.run` など)。
+3. サービス側で、月の上限金額(予算の上限)を設定する。
+4. スクリプト(これから作る): 画像+指示文 → 動画クリップ(複数) → `compose_video.py` で声・字幕・BGM → 20秒の縦動画。
+
+### 激しい動きに強い候補(私が選ぶ3つ)
+| 候補 | 理由 | 目安の費用 |
+|---|---|---|
+| Veo 3.1 Fast(Gemini API) | 動き・物理が強い。音声も作れる。公式API | $0.10/秒 |
+| Seedance 2.0 | 画質の順位が高い(1つの比較サイト)。人物の一貫性の評価も高い | 約$0.07/秒(480p)〜 |
+| Hailuo(02/2.3) | 動きの激しさに強い、とされる。いちばん安い部類 | 約$0.07〜0.08/秒 |
+- 3つとも、同じ画像・同じ指示文・同じ長さ(5〜8秒)で比べる。費用は3本で約$2〜3。
+- fal.ai などの窓口(1つのキーで複数のモデルが使える)を使うと、設定が1回で済む。料金は窓口ごとに違う(Kling は fal 経由が公式の約2.7倍、という記事あり)ので、公式と比べて選ぶ。
